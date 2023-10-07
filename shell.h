@@ -19,7 +19,7 @@
 
 void fj_print(const char *func_display);
 void my_prompt(void);
-void my_execute(void)
+void my_execute(void);
 
 
 #endif /* SHELL_H */

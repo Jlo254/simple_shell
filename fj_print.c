@@ -9,5 +9,6 @@
 
 void fj_print(const char *func_display)
 {
-write (STDOUT_FILENO, func_display, strlen(func_display));
+	size_t length = strlen(func_display);
+	write(STDOUT_FILENO, func_display, length);
 }

@@ -11,42 +11,36 @@ char *get_user_input(void)
 	input = (char *)malloc(input_size);
 	if (input == NULL)
 	{
-		perror("Memory allocation error");
-		exit(EXIT_FAILURE);
+	       perror("Memory allocation error");
+		_exit(EXIT_FAILURE);
 	}
 
+	ssize_t bytesRead;
+
 	/*
-	 * to read user input
+	 * bytesRead- used to read user input
 	 *
 	 */
-	ssize_t bytesRead = getline(&input, &input_size, stdin);
+	bytesRead = read(STDIN_FILENO, input, input_size);
 
 	if (bytesRead == -1)
 	{
 		perror("Error reading input");
 		free(input);
-		exit(EXIT_FAILURE);
+		_exit(EXIT_FAILURE);
 	}
+
 	else if (bytesRead == 0)
 	{
-
-	/*
-	 * for handling Ctrl+D
-	 *
-	 */
 		free(input);
-		exit(EXIT_SUCCESS);
+		return NULL;
 	}
 
-	/*
-	 * to remove new line if present
-	 */
-	if (input[bytesRead - 1] == '\n')
-	{
-		input[bytesRead -1] = '\0';
-	}
+	input[bytesRead] = '\0';
+	 if (input[bytesRead -1] == '\n');
+	 {
+		 input[bytesRead -1] = '\0';
+	 }
 
-	return input;
-
+	 return (input);
 }
-

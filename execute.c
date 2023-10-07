@@ -2,9 +2,9 @@
 
 /**
  * my_execute - Function that executes command
- * @execute: Command line to be executed
+ * It reads a user provided command, forks a new process
+ * then executes the command using execve system call
  *
- * Return: exit
  */
 void my_execute(void)
 {
@@ -15,7 +15,9 @@ void my_execute(void)
 		exit(EXIT_SUCCESS);
 	}
 
-	pid_t child_pid = fork();
+	pid_t child_pid;
+	
+	child_pid = fork();
 
 	if (child_pid == -1)
 	{
@@ -26,12 +28,12 @@ void my_execute(void)
 
 	else if (child_pid == 0)
 	{
-		char **args = tokenize_input(user_input);
+		char *args[] = {user_input, NULL};
 
-		if (execve(args[0], args, NULL) == -1)
+		if (execve(user_input, args, NULL) == -1)
 		{
 			perror("execve")
-				free(user_input);
+			free(user_input);
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -39,6 +41,7 @@ void my_execute(void)
 	else
 	{
 		int status;
+
 		waitpid(child_pid, &status, 0);
 
 		free(user_input);
