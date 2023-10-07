@@ -2,18 +2,22 @@
 #define SHELL_H
 
 
-/* Indicates all Headers */
+/* Indicates all headers used */
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <stdbool.h>
 
-/* PROTOTYPES USED */
+/* Indicates read/write buffers */
+#define MAX_INPUT_LENGTH 1024
+
+
+/* Indicates function prototypes used */
 
 void fj_print(const char *func_display);
 void my_prompt(void);
 void my_execute( const char *execute);
 
 
-#endif
+#endif /* SHELL_H */
