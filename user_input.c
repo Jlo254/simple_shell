@@ -1,54 +1,52 @@
 #include "shell.h"
 
-char *get_user_input(void) {
-	fj_print("cisfun$ ");
-
+char *get_user_input(void)
+{
 	char *input = NULL;
 	size_t input_size = MAX_INPUT_LENGTH;
 
 	/*
-	 * for allocating memory for inpur buffer
-	 *
-	*/
+	 * for allocating memory for input
+	 */
 	input = (char *)malloc(input_size);
-	if (input ==NULL) {
-		write(STDERR_FILENO, "Memory allocation error\n", 24);
+	if (input == NULL)
+	{
+		perror("Memory allocation error");
 		exit(EXIT_FAILURE);
 	}
 
-	/* for reading user input
+	/*
+	 * to read user input
 	 *
-	*/
-	ssize_t bytesRead = read(STDIN_FILENO, input, input_size);
-	if (bytesRead == -1) {
-        /*
-	 * To handle read error
 	 */
-        perror("Error reading input");
-        free(input);
-        exit(EXIT_FAILURE);
-    } else if (bytesRead == 0) {
-        /*
-	 * To handle (Ctrl+D)
+	ssize_t bytesRead = getline(&input, &input_size, stdin);
+
+	if (bytesRead == -1)
+	{
+		perror("Error reading input");
+		free(input);
+		exit(EXIT_FAILURE);
+	}
+	else if (bytesRead == 0)
+	{
+
+	/*
+	 * for handling Ctrl+D
+	 *
 	 */
-        free(input);
-        return NULL;
-    }
+		free(input);
+		exit(EXIT_SUCCESS);
+	}
 
-    /*
-     * to null-terminate the input string
-     */
-    input[bytesRead - 1] = '\0';
+	/*
+	 * to remove new line if present
+	 */
+	if (input[bytesRead - 1] == '\n')
+	{
+		input[bytesRead -1] = '\0';
+	}
 
-    /*
-     * to remove newline character if present
-     */
-    char *newlinePtr = strchr(input, newline);
-    if (newlinePtr) {
-        *newlinePtr = '\0';
-    }
-
-
-    return input;
+	return input;
 
 }
+

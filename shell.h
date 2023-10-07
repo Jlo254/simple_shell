@@ -8,6 +8,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdbool.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 /* Indicates read/write buffers */
 #define MAX_INPUT_LENGTH 1024
@@ -17,7 +19,7 @@
 
 void fj_print(const char *func_display);
 void my_prompt(void);
-void my_execute( const char *execute);
+void my_execute(void)
 
 
 #endif /* SHELL_H */

@@ -6,32 +6,41 @@
  *
  * Return: exit
  */
-void my_execute( const char *execute)
+void my_execute(void)
 {
-	char* args[]=
+	char *user_input = get_user_input();
+
+	if (user_input == NULL)
 	{
-		"/bin/ls", execute, NULL
+		exit(EXIT_SUCCESS);
 	}
-{
+
 	pid_t child_pid = fork();
 
-	if (child_pid == -1 )
+	if (child_pid == -1)
 	{
 		perror("fork");
+		free(user_input);
 		exit(EXIT_FAILURE);
 	}
-else if (child_pid == 0)
-{
-	if (execve("/bin/ls", args, NULL) == -1)
+
+	else if (child_pid == 0)
 	{
+		char **args = tokenize_input(user_input);
 
-	perror("execve");
-	exit(EXIT_FAILURE);
-}
-else
-{
-	wait(NULL);
-}
-	return(0);
-}
+		if (execve(args[0], args, NULL) == -1)
+		{
+			perror("execve")
+				free(user_input);
+			exit(EXIT_FAILURE);
+		}
+	}
 
+	else
+	{
+		int status;
+		waitpid(child_pid, &status, 0);
+
+		free(user_input);
+	}
+}
