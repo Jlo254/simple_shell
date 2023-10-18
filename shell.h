@@ -1,25 +1,24 @@
 #ifndef SHELL_H
 #define SHELL_H
-
-
-/* Indicates all headers used */
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <string.h>
-#include <stdbool.h>
-#include <sys/types.h>
+#include <signal.h>
+#include <unistd.h>
 #include <sys/wait.h>
 
-/* Indicates read/write buffers */
-#define MAX_INPUT_LENGTH 1024
 
+int main(int ac, char **av, char **env);
+void my_print(char **env);
+int fj_execute(char **argv, char **av, char **env);
+char *fj_gets(char *process, char **environ);
+int check(char *command);
+int str_len(char *str);
+int compare_str(char *s1, char *s2);
+char *_strd(char *str);
+void mem_free(char **buff);
+char **split_cmd(char *command1);
+char **man_line(char *line);
+int get_command(char *cmmd);
 
-/* Indicates function prototypes used */
-
-void fj_print(const char *func_display);
-void my_prompt(void);
-void my_execute(void);
-
-
-#endif /* SHELL_H */
+#endif

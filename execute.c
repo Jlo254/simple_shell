@@ -1,49 +1,35 @@
 #include "shell.h"
 
 /**
- * my_execute - Function that executes command
- * It reads a user provided command, forks a new process
- * then executes the command using execve system call
+ * fj_execute - function that executes a command
+ * @argv: indicates argument vector
+ * @av: exact program to execute
+ * @env: shows the environment variable
  *
+ * Return: 0 on success, -1 on error
  */
-void my_execute(void)
+
+int fj_execute(char **argv, char **av, char **env)
 {
-	char *user_input = get_user_input();
-
-	if (user_input == NULL)
-	{
-		exit(EXIT_SUCCESS);
-	}
-
-	pid_t child_pid;
-	
-	child_pid = fork();
-
-	if (child_pid == -1)
-	{
-		perror("fork");
-		free(user_input);
-		exit(EXIT_FAILURE);
-	}
-
-	else if (child_pid == 0)
-	{
-		char *args[] = {user_input, NULL};
-
-		if (execve(user_input, args, NULL) == -1)
-		{
-			perror("execve")
-			free(user_input);
-			exit(EXIT_FAILURE);
-		}
-	}
-
-	else
-	{
-		int status;
-
-		waitpid(child_pid, &status, 0);
-
-		free(user_input);
-	}
+pid_t child_pid;
+int status;
+child_pid = fork();
+if (child_pid < 0)
+{
+perror("Error");
+return (-1);
+}
+if (child_pid == 0)
+{
+if (execve(argv[0], argv, env) == -1)
+{
+perror(av[0]);
+return (-1);
+}
+}
+else
+{
+wait(&status);
+}
+return (0);
 }

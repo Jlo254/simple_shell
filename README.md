@@ -1,1 +1,1 @@
-This is a group project on Simple Shell created by Jael Jepchumba and Faith Adewuyi
+This is a group project done by Faith Adewuyi and Jael Jamphumba

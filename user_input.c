@@ -1,46 +1,54 @@
 #include "shell.h"
 
-char *get_user_input(void)
+/**
+ * fj_gets - function that collects environment var
+ *
+ * @process: variable to get
+ * @environ: Environment variables
+ *
+ * Return: a pointer to the env var value
+ */
+char *fj_gets(char *process, char **environ)
 {
-	char *input = NULL;
-	size_t input_size = MAX_INPUT_LENGTH;
+int i, len, compare1 = 1;
+char *f_var, *token, *value1;
+i = 0;
+len = str_len(process);
+while (environ[i])
+{
+compare1 = compare_str(environ[i], process);
+if ((compare1 == 0))
+{
+f_var = _strd(environ[i]);
+if (str_len(f_var) == (len + 1))
+{
+free(f_var);
+return (NULL);
+}
+token = strtok(f_var, "=");
+token = strtok(NULL, "=");
+value = _strd(token);
+}
+i++;
+}
+free(f_var);
+return (value1);
+}
 
-	/*
-	 * for allocating memory for input
-	 */
-	input = (char *)malloc(input_size);
-	if (input == NULL)
-	{
-	       perror("Memory allocation error");
-		_exit(EXIT_FAILURE);
-	}
-
-	ssize_t bytesRead;
-
-	/*
-	 * bytesRead- used to read user input
-	 *
-	 */
-	bytesRead = read(STDIN_FILENO, input, input_size);
-
-	if (bytesRead == -1)
-	{
-		perror("Error reading input");
-		free(input);
-		_exit(EXIT_FAILURE);
-	}
-
-	else if (bytesRead == 0)
-	{
-		free(input);
-		return NULL;
-	}
-
-	input[bytesRead] = '\0';
-	 if (input[bytesRead -1] == '\n');
-	 {
-		 input[bytesRead -1] = '\0';
-	 }
-
-	 return (input);
+/**
+ * check - function that checks user input
+ * @command: command variable
+ *
+ * Return: 1 on true, 0 otherwise
+ */
+int check(char *command)
+{
+int compare, compare1;
+compare = compare_str(command, "/");
+compare1 = compare_str(command, ".");
+if (compare == 0 || compare1 == 0)
+{
+return (0);
+}
+return (1);
 }
