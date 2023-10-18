@@ -61,7 +61,7 @@ return (argv);
 }
 
 /**
- * get_cmd_len - count the len of cmd
+ * get_command - function that count length of commd
  * @cmmd: the imputed command
  *
  * Return: the length of command

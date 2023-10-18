@@ -20,5 +20,13 @@ void mem_free(char **buff);
 char **split_cmd(char *command1);
 char **man_line(char *line);
 int get_command(char *cmmd);
+void handle_error(char *name, char *comd);
+void print_error(char *name, char *comd);
+int path_handl(int env_f, char **argv, char **av, char **env);
+int get_side_num(char *side);
+char **break_side(char *side);
+char *concat_path(char *side, char *comd);
+int get_side_num(char *side);
+char *check_file(char **dir_arr, char *command);
 
 #endif
