@@ -27,7 +27,7 @@ return (NULL);
 }
 token = strtok(f_var, "=");
 token = strtok(NULL, "=");
-value = _strd(token);
+value1 = _strd(token);
 }
 i++;
 }

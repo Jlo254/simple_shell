@@ -9,7 +9,7 @@
 
 char **split_cmd(char *command1)
 {
-int i, NULL;
+int i;
 char *token;
 char **argv;
 argv = malloc(sizeof(char *) * str_len(command1) + 1);
@@ -39,7 +39,7 @@ char **man_line(char *line)
 {
 char *ex, *cmd_buffer;
 char **argv;
-int stop, NULL;
+int stop;
 ex = "exit";
 if (line[0] == '\n' || line[0] == ' ')
 {
@@ -52,8 +52,8 @@ free(line);
 exit(0);
 }
 cmd_buffer = strtok(line, "\n");
-argv = break_cmd(cmd_buff);
-if (compare_str("env", cmd_buff) == 0)
+argv = split_cmd(cmd_buffer);
+if (compare_str("env", cmd_buffer) == 0)
 {
 argv[0] = "env";
 }
